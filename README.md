@@ -1,45 +1,56 @@
+# SLOT HAPPENS — Course Material Search Engine
 
-# AI Course Material Search Engine
+A Python information-retrieval project that searches course PDFs using a from-scratch TF-IDF implementation and cosine similarity, with keyword-frequency ranking as a baseline. This version includes a polished Streamlit dashboard.
 
-A Python-based search engine that retrieves relevant course material PDFs using information retrieval techniques.
+## Run the dashboard
 
-## Features
-- PDF text extraction and preprocessing
-- Vocabulary and inverted index construction
-- TF-IDF weighting and cosine similarity
-- Keyword-frequency baseline for comparison
-- Top-5 document retrieval
-- Experimental evaluation using Precision@5, MRR, and query execution time
+1. Extract the project ZIP.
+2. Make sure the `dataset/` folder is beside `app.py` and contains the PDF files.
+3. Open a terminal in the project folder.
+4. Install dependencies:
 
-## Technologies
-- Python
-- PyMuPDF
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
+5. Start the dashboard:
+
+   ```bash
+   python -m streamlit run app.py
+   ```
+
+6. Streamlit will print a local URL (usually `http://localhost:8501`). Open it in your browser.
+
+## Dashboard sections
+
+- **Search:** Search the PDF collection, choose a ranking method, inspect ranked results, compare methods, and export results as CSV.
+- **Overview:** Corpus size, subject distribution, vocabulary, token counts, and retrieval pipeline.
+- **Algorithm Lab:** Compare keyword-frequency and TF-IDF + cosine retrieval using the relevance labels in `results/relevance_labels.json`.
+- **Corpus Explorer:** Browse PDFs and inspect document frequency, IDF, term counts, TF, and TF-IDF.
+
+## Core implementation
+
+- `preprocessing.py`: PDF text extraction and token preprocessing.
+- `indexing.py`: vocabulary, term counts, document frequency, and inverted index.
+- `tfidf.py`: TF, IDF, and document vector calculations.
+- `similarity.py`: query vector and cosine similarity calculations.
+- `baseline.py`: keyword-frequency baseline.
+- `ranking.py`: top-k ranking.
+- `evaluation.py`, `run_experiments.py`: evaluation utilities and experiment runner.
+- `app.py`: dashboard interface, using the same project modules for search.
+
+## Evaluation caution
+
+The relevance labels in `results/relevance_labels.json` are currently provisional subject-level judgments. Verify each query's relevant PDFs against their actual contents before reporting evaluation metrics as final. Query-time measurements exclude PDF extraction and initial index construction.
+
+## Terminal version
+
+The original command-line interface is still available:
+
+```bash
+python main.py
+```
 
 ## Dataset
-The project uses 34 course material PDFs across 9 subjects.
 
-The PDFs are excluded from this repository. Users can add their own PDFs to a folder named `dataset`.
-
-## How to Run
-
-1. Install dependencies:
-   `pip install -r requirements.txt`
-
-2. Create a `dataset` folder and add PDF files.
-
-3. Run the interactive search engine:
-   `python main.py`
-
-4. Run the evaluation:
-   `python run_experiments.py`
-
-   Evaluation metrics require relevance labels in `results/relevance_labels.json`.
-
-## Algorithms
-1. Keyword-frequency ranking
-2. TF-IDF with cosine similarity
-
-## Evaluation
-Both algorithms are compared using Precision@5, Mean Reciprocal Rank (MRR), and average query execution time.
-
-The current relevance judgments are provisional and based on subject-level matching rather than independently verified document relevance.
+PDFs are included in the supplied project package in `dataset/`. If you distribute the source separately, add the dataset folder alongside `app.py`.

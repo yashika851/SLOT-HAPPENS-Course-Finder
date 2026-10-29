@@ -1,11 +1,5 @@
-# Course PDFs
-dataset/
-
-# Python temporary files
 __pycache__/
-*.pyc
+*.py[cod]
 .venv/
 venv/
-
-# Editor files
-.vscode/
+.streamlit/secrets.toml
